@@ -10,6 +10,15 @@ Un-official UAE Pass Flutter plugin for Android and iOS.
 uae_pass: ^0.0.1
 ```
 
+or
+
+```yaml
+uae_pass:
+  git:
+    url: https://github.com/Faisalkc4u/uae_pass.git
+    ref: main
+```
+
 - Run flutter pub get
 
 ```bash
