@@ -54,9 +54,8 @@ public class UaePassPlugin: NSObject, FlutterPlugin {
             webVC.onUAEPassSuccessBlock = {(code: String?) -> Void in
                 UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: true)
                 if let code = code {
-
-                    self.getUaePassTokenForCode(code: code)
-                }
+                    self.flutterResult!(String(code))
+                 }
                 else{
                     self.flutterResult!(FlutterError(code: "ERROR", message:"Unable to get user token, Please try again.",details: nil)) 
                 }
