@@ -45,7 +45,11 @@ public class UaePassPlugin: NSObject, FlutterPlugin {
                                                  failSchemeURL: redirectUriLogin,
                                                  signingScope: "urn:safelayer:eidas:sign:process:document")
       }
-    
+    case "auth_token":
+      if let arguments = call.arguments as? [String: Any]{
+        let code = arguments["code"] as! String
+        self.getUaePassTokenForCode(code: code)
+      }
     case "sign_in":
     
          

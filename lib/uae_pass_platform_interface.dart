@@ -31,4 +31,8 @@ abstract class UaePassPlatform extends PlatformInterface {
   Future<String> signIn() {
     throw UnimplementedError('signIn() has not been implemented.');
   }
+
+  Future<String> getAuthToken(String code) {
+    throw UnimplementedError('signIn() has not been implemented.');
+  }
 }

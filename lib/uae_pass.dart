@@ -19,9 +19,19 @@ class UaePass {
         .setUp(clientId, clientSecret, isProduction, urlScheme, state);
   }
 
-  Future<String?> signIn() async {
+  Future<String> signIn() async {
     try {
       return await UaePassPlatform.instance.signIn();
+    } on PlatformException catch (e) {
+      throw (e.message ?? "Unknown error");
+    } catch (e) {
+      throw ("Unknown error");
+    }
+  }
+
+  Future<String> getAccessToken(String token) async {
+    try {
+      return await UaePassPlatform.instance.getAuthToken(token);
     } on PlatformException catch (e) {
       throw (e.message ?? "Unknown error");
     } catch (e) {

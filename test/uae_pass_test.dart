@@ -15,6 +15,11 @@ class MockUaePassPlatform
       String urlScheme, String state) {
     return Future.value(null);
   }
+
+  @override
+  Future<String> getAuthToken(String code) {
+    throw UnimplementedError();
+  }
 }
 
 void main() {
