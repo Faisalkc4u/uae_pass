@@ -29,6 +29,8 @@ flutter pub get
 
 ```dart
 import 'package:uae_pass/uae_pass.dart';
+final _uaePassPlugin = UaePass();
+
 
 ```
 
@@ -92,4 +94,11 @@ import 'package:uae_pass/uae_pass.dart';
       </array>
     </dict>
   </array>
+```
+
+# Access User Data
+
+```curl
+curl --location 'https://stg-id.uaepass.ae/idshub/userinfo' \
+--header 'Authorization: Bearer token_here' \
 ```
