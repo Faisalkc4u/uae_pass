@@ -8,11 +8,11 @@ class MockUaePassPlatform
     with MockPlatformInterfaceMixin
     implements UaePassPlatform {
   @override
-  Future<String?> signIn() => Future.value('42');
+  Future<String> signIn() => Future.value('42');
 
   @override
   Future<void> setUp(String clientId, String clientSecret, bool isProduction,
-      String urlScheme) {
+      String urlScheme, String state) {
     return Future.value(null);
   }
 }

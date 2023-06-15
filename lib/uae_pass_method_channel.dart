@@ -10,27 +10,26 @@ class MethodChannelUaePass extends UaePassPlatform {
   final methodChannel = const MethodChannel('uae_pass');
 
   @override
-  Future<String?> getPlatformVersion() async {
-    final version =
-        await methodChannel.invokeMethod<String>('getPlatformVersion');
-    return version;
-  }
-
-  @override
-  Future<void> setUp(String clientId, String clientSecret, bool isProduction,
-      String urlScheme) async {
+  Future<void> setUp(
+    String clientId,
+    String clientSecret,
+    bool isProduction,
+    String urlScheme,
+    String state,
+  ) async {
     await methodChannel
         .invokeMethod<void>('set_up_environment', <String, String>{
       'client_id': clientId,
       'client_secret': clientSecret,
       'environment': isProduction ? 'production' : 'qa',
-      "redirect_uri_login": urlScheme
+      "redirect_uri_login": urlScheme,
+      'state': state
     });
   }
 
   @override
-  Future<String?> signIn() async {
+  Future<String> signIn() async {
     final result = await methodChannel.invokeMethod<String>('sign_in');
-    return result;
+    return result!;
   }
 }

@@ -24,11 +24,11 @@ abstract class UaePassPlatform extends PlatformInterface {
   }
 
   Future<void> setUp(String clientId, String clientSecret, bool isProduction,
-      String urlScheme) {
+      String urlScheme, String state) {
     throw UnimplementedError('setUp() has not been implemented.');
   }
 
-  Future<String?> signIn() {
+  Future<String> signIn() {
     throw UnimplementedError('signIn() has not been implemented.');
   }
 }
