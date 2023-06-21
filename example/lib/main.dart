@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:uae_pass/uae_pass.dart';
@@ -50,6 +52,7 @@ class _MyAppState extends State<MyApp> {
                   // );
                   try {
                     _accessToken = await _uaePassPlugin.signIn();
+                    if(Platform.isIOS)
                     _authToken =
                         await _uaePassPlugin.getAccessToken(_accessToken!);
                   } catch (e) {

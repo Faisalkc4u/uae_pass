@@ -1,23 +1,23 @@
 package com.mvpapps.uae_pass
 
-import android.widget.Toast
+import ae.sdg.libraryuaepass.*
+import ae.sdg.libraryuaepass.UAEPassController.getAccessToken
+import ae.sdg.libraryuaepass.UAEPassController.resume
+import ae.sdg.libraryuaepass.business.authentication.model.UAEPassAccessTokenRequestModel
+import android.content.Intent
+import android.util.Log
 import androidx.annotation.NonNull
-
 import io.flutter.embedding.engine.plugins.FlutterPlugin
+import io.flutter.embedding.engine.plugins.activity.ActivityAware
+import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
-import com.mvpapps.uae_pass.UAEPassRequestModels
-
-import ae.sdg.libraryuaepass.*
-import ae.sdg.libraryuaepass.UAEPassController.getAccessToken
-import ae.sdg.libraryuaepass.UAEPassAccessCodeCallback
-import ae.sdg.libraryuaepass.business.authentication.model.UAEPassAccessTokenRequestModel
-
+import io.flutter.plugin.common.PluginRegistry;
 
 /** UaePassPlugin */
-class UaePassPlugin: FlutterPlugin, MethodCallHandler {
+class UaePassPlugin: FlutterPlugin, MethodCallHandler, ActivityAware, PluginRegistry.NewIntentListener  {
   /// The MethodChannel that will the communication between Flutter and native Android
   ///
   /// This local reference serves to register the plugin with the Flutter Engine and unregister it
@@ -25,6 +25,36 @@ class UaePassPlugin: FlutterPlugin, MethodCallHandler {
   private lateinit var channel : MethodChannel
   private lateinit var binding: FlutterPlugin.FlutterPluginBinding
   private lateinit var requestModel: UAEPassAccessTokenRequestModel
+ 
+  private lateinit var activityPluginBinding: ActivityPluginBinding
+
+
+
+  override fun onAttachedToActivity(@NonNull binding: ActivityPluginBinding) {
+    attachToActivity(binding)
+  }
+
+  override fun onDetachedFromActivityForConfigChanges() {
+    disposeActivity()
+  }
+
+  override fun onReattachedToActivityForConfigChanges(@NonNull binding: ActivityPluginBinding) {
+    attachToActivity(binding)
+  }
+
+  override fun onDetachedFromActivity() {
+    disposeActivity()
+  }
+
+  private fun attachToActivity(binding: ActivityPluginBinding) {
+    this.activityPluginBinding = binding
+    binding.addOnNewIntentListener(this)
+  }
+
+  private fun disposeActivity() {
+  }
+
+
   override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
     channel = MethodChannel(flutterPluginBinding.binaryMessenger, "uae_pass")
     channel.setMethodCallHandler(this)
@@ -34,32 +64,43 @@ class UaePassPlugin: FlutterPlugin, MethodCallHandler {
   override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
     if(call.method=="set_up_environment")
     {
-       requestModel = UAEPassRequestModels.getAuthenticationRequestModel(binding.getApplicationContext())
+
+      Log.d("intent","setup")
 
     }else if(call.method=="sign_in")
     {
-      getAccessToken(binding.getApplicationContext(), requestModel, object : UAEPassAccessTokenCallback {
+      requestModel = UAEPassRequestModels.getAuthenticationRequestModel(this.activityPluginBinding.getActivity())
+      getAccessToken(this.activityPluginBinding.getActivity(), requestModel, object : UAEPassAccessTokenCallback {
         override fun getToken(accessToken: String?, state: String, error: String?) {
+
           if (error != null) {
-            Toast.makeText(
-                    binding.getApplicationContext(),
-                    "Error while getting access token",
-                    Toast.LENGTH_SHORT
-            ).show()
+            result.error("ERROR", error, null);
+
           } else {
-            Toast.makeText(binding.getApplicationContext(), "Access Token Received", Toast.LENGTH_SHORT)
-                    .show()
+            result.success(accessToken)
+
           }
         }
       })
     }
-    else if (call.method == "getPlatformVersion") {
-      result.success("Android ${android.os.Build.VERSION.RELEASE}")
-    } else {
+
+    else {
       result.notImplemented()
     }
   }
-
+  override  fun onNewIntent(intent: Intent): Boolean {
+    Log.d("intent","inside intent")
+    handleIntent(intent)
+    return false
+  }
+  private fun handleIntent(intent: Intent?) {
+    Log.d("intent","inside intent")
+    if (intent != null && intent.data != null) {
+      if ("uaepassdemoappds" == intent.data!!.scheme) {
+        resume(intent.dataString)
+      }
+    }
+  }
   override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
     channel.setMethodCallHandler(null)
   }
