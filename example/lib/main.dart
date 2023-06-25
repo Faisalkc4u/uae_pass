@@ -52,9 +52,9 @@ class _MyAppState extends State<MyApp> {
                   // );
                   try {
                     _accessToken = await _uaePassPlugin.signIn();
-                    if(Platform.isIOS)
-                    _authToken =
-                        await _uaePassPlugin.getAccessToken(_accessToken!);
+                    if (Platform.isIOS)
+                      _authToken =
+                          await _uaePassPlugin.getAccessToken(_accessToken!);
                   } catch (e) {
                     _error = e.toString();
                   }

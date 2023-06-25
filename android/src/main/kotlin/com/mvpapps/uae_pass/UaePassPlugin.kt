@@ -15,9 +15,13 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.plugin.common.PluginRegistry;
+import android.webkit.CookieManager
+// create a class that implements the PluginRegistry.NewIntentListener interface
+ 
+
 
 /** UaePassPlugin */
-class UaePassPlugin: FlutterPlugin, MethodCallHandler, ActivityAware, PluginRegistry.NewIntentListener  {
+class UaePassPlugin: FlutterPlugin, MethodCallHandler, ActivityAware, PluginRegistry.NewIntentListener {
   /// The MethodChannel that will the communication between Flutter and native Android
   ///
   /// This local reference serves to register the plugin with the Flutter Engine and unregister it
@@ -27,31 +31,51 @@ class UaePassPlugin: FlutterPlugin, MethodCallHandler, ActivityAware, PluginRegi
   private lateinit var requestModel: UAEPassAccessTokenRequestModel
  
   private lateinit var activityPluginBinding: ActivityPluginBinding
-
+  private lateinit var flutterResult: Result
 
 
   override fun onAttachedToActivity(@NonNull binding: ActivityPluginBinding) {
+     Log.d("intent","onAttachedToActivity")
+     
+     if (this::activityPluginBinding.isInitialized) {
+     Log.d("intent","onAttachedToActivity- removeOnNewIntentListener")
+      disposeActivity()
+    }
+    binding.addOnNewIntentListener(this)
     attachToActivity(binding)
+    handleIntent(binding.getActivity().getIntent())
   }
 
   override fun onDetachedFromActivityForConfigChanges() {
+    Log.d("intent","onDetachedFromActivityForConfigChanges")
     disposeActivity()
   }
 
   override fun onReattachedToActivityForConfigChanges(@NonNull binding: ActivityPluginBinding) {
+     Log.d("intent","onReattachedToActivityForConfigChanges")
+    if (this::activityPluginBinding.isInitialized) {
+      disposeActivity()
+    } 
+    binding.addOnNewIntentListener(this)
     attachToActivity(binding)
   }
 
   override fun onDetachedFromActivity() {
+    Log.d("intent","onDetachedFromActivity")
     disposeActivity()
   }
 
   private fun attachToActivity(binding: ActivityPluginBinding) {
     this.activityPluginBinding = binding
-    binding.addOnNewIntentListener(this)
   }
 
   private fun disposeActivity() {
+    Log.d("intent","disposeActivity")
+     if (this::activityPluginBinding.isInitialized) {
+      activityPluginBinding.removeOnNewIntentListener(this)
+     }
+    
+    activityPluginBinding = null!!
   }
 
 
@@ -59,24 +83,30 @@ class UaePassPlugin: FlutterPlugin, MethodCallHandler, ActivityAware, PluginRegi
     channel = MethodChannel(flutterPluginBinding.binaryMessenger, "uae_pass")
     channel.setMethodCallHandler(this)
     binding = flutterPluginBinding;
+
+    Log.d("intent","onAttachedToEngine")
   }
 
   override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
+    flutterResult = result
     if(call.method=="set_up_environment")
     {
-
-      Log.d("intent","setup")
+      CookieManager.getInstance().removeAllCookies { }
+      CookieManager.getInstance().flush()
 
     }else if(call.method=="sign_in")
     {
       requestModel = UAEPassRequestModels.getAuthenticationRequestModel(this.activityPluginBinding.getActivity())
       getAccessToken(this.activityPluginBinding.getActivity(), requestModel, object : UAEPassAccessTokenCallback {
         override fun getToken(accessToken: String?, state: String, error: String?) {
-
+            Log.d("intent","inside call back")
           if (error != null) {
+            Log.d("intent","inside error")
             result.error("ERROR", error, null);
-
           } else {
+            Log.d("intent","Sccess")
+            Log.d("intent",accessToken!!)
+             
             result.success(accessToken)
 
           }
@@ -89,19 +119,21 @@ class UaePassPlugin: FlutterPlugin, MethodCallHandler, ActivityAware, PluginRegi
     }
   }
   override  fun onNewIntent(intent: Intent): Boolean {
-    Log.d("intent","inside intent")
+    Log.d("intent","inside onNewIntent")
     handleIntent(intent)
     return false
   }
   private fun handleIntent(intent: Intent?) {
-    Log.d("intent","inside intent")
     if (intent != null && intent.data != null) {
-      if ("uaepassdemoappds" == intent.data!!.scheme) {
+      if ("myapp" == intent.data!!.scheme) {
+        
         resume(intent.dataString)
       }
     }
   }
   override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
+    Log.d("intent","onDetachedFromEngine")
     channel.setMethodCallHandler(null)
   }
+  
 }

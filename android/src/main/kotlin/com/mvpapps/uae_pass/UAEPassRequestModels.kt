@@ -29,7 +29,7 @@ object UAEPassRequestModels {
     private const val UAE_PASS_PACKAGE_ID = "ae.uaepass.mainapp"
     private const val UAE_PASS_QA_PACKAGE_ID = "ae.uaepass.mainapp.qa"
     private const val UAE_PASS_STG_PACKAGE_ID = "ae.uaepass.mainapp.stg"
-    private const val SCHEME = "uaepassdemoappds"
+    private const val SCHEME = "myapp"
     private const val FAILURE_HOST = "failure"
     private const val SUCCESS_HOST = "success"
     private val STATE = generateRandomString(24)

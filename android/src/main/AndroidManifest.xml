@@ -1,8 +1,4 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
   package="com.mvpapps.uae_pass">
-    <queries>
-        <package android:name="ae.uaepass.mainapp" />
-        <package android:name="ae.uaepass.mainapp.qa" />
-        <package android:name="ae.uaepass.mainapp.stg" />
-    </queries>
+    
 </manifest>

@@ -1,5 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-
+    <queries>
+        <package android:name="ae.uaepass.mainapp" />
+        <package android:name="ae.uaepass.mainapp.qa" />
+        <package android:name="ae.uaepass.mainapp.stg" />
+    </queries>
     <application
         android:label="uae_pass_example"
         android:name="${applicationName}"
@@ -24,19 +28,21 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-            <intent-filter>
+            
+            <intent-filter  >
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
+
                 <data
                     android:host="success"
-                    android:scheme="uaepassdemoappds" />
+                    android:scheme="myapp" />
 
                 <data
                     android:host="failure"
-                    android:scheme="uaepassdemoappds" />
+                    android:scheme="myapp" />
 
             </intent-filter>
         </activity>
