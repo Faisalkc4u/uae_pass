@@ -36,34 +36,29 @@ class UaePassPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,PluginRegis
 
 
   override fun onAttachedToActivity(@NonNull binding: ActivityPluginBinding) {
-     Log.d("intent","onAttachedToActivity")
     if(activity==null)
      activity = binding.activity
     binding.addOnNewIntentListener(this)
   }
 
   override fun onDetachedFromActivityForConfigChanges() {
-    Log.d("intent","onDetachedFromActivityForConfigChanges")
-  }
+   }
 
   override fun onReattachedToActivityForConfigChanges(@NonNull binding: ActivityPluginBinding) {
-     Log.d("intent","onReattachedToActivityForConfigChanges")
-   activity =binding.activity
+    activity =binding.activity
     binding.addOnNewIntentListener(this)
 
   }
 
   override fun onDetachedFromActivity() {
-    Log.d("intent","onDetachedFromActivity")
-    activity = null
+     activity = null
   }
 
 
   override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
     channel = MethodChannel(flutterPluginBinding.binaryMessenger, "uae_pass")
     channel.setMethodCallHandler(this)
-
-    Log.d("intent","onAttachedToEngine")
+ 
   }
 
   override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
@@ -74,19 +69,14 @@ class UaePassPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,PluginRegis
       CookieManager.getInstance().flush()
 
     }else if(call.method=="sign_in")
-    {
-      Log.d("intent","signIn")
+    { 
       requestModel = UAEPassRequestModels.getAuthenticationRequestModel(activity!!)
       getAccessToken(activity!!, requestModel, object : UAEPassAccessTokenCallback {
         override fun getToken(accessToken: String?, state: String, error: String?) {
             Log.d("intent","inside call back")
-          if (error != null) {
-            Log.d("intent","inside error")
+          if (error != null) { 
             result.error("ERROR", error, null);
-          } else {
-            Log.d("intent","Sccess")
-            Log.d("intent",accessToken!!)
-             
+          } else { 
             result.success(accessToken)
 
           }
@@ -99,8 +89,7 @@ class UaePassPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,PluginRegis
     }
   }
   override  fun onNewIntent(intent: Intent): Boolean {
-    Log.d("intent","inside onNewIntent")
-    handleIntent(intent)
+     handleIntent(intent)
     return false
   }
   private fun handleIntent(intent: Intent?) {
@@ -111,8 +100,7 @@ class UaePassPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,PluginRegis
     }
   }
   override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
-    Log.d("intent","onDetachedFromEngine")
-    channel.setMethodCallHandler(null)
+     channel.setMethodCallHandler(null)
   }
   
 }
