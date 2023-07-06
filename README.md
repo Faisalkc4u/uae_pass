@@ -96,6 +96,50 @@ final _uaePassPlugin = UaePass();
   </array>
 ```
 
+## Android Setup
+
+- Update android:launchMode="singleTask" the AndroidManifest.xml file
+
+```xml
+
+ <activity
+            android:name=".MainActivity"
+            android:exported="true"
+
+            android:launchMode="singleTask"
+
+            android:theme="@style/LaunchTheme"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+            android:hardwareAccelerated="true"
+            android:windowSoftInputMode="adjustResize">
+            .....
+
+            </activity>
+
+```
+
+- Set up the intent filter in your AndroidManifest.xml file
+
+```xml
+            <intent-filter >
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+
+                <data
+                    android:host="success"
+                    android:scheme="<Your App Scheme>" />
+
+                <data
+                    android:host="failure"
+                    android:scheme="<Your App Scheme>" />
+
+            </intent-filter>
+
+```
+
 # Access User Data
 
 ```curl
