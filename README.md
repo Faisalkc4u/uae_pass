@@ -139,7 +139,13 @@ final _uaePassPlugin = UaePass();
             </intent-filter>
 
 ```
+Note: incase kotlin error, add the following to your build.gradle file
 
+```gradle
+buildscript {
+    // update this line
+    ext.kotlin_version = '1.7.10'
+```
 # Access User Data
 
 ```curl
