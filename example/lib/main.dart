@@ -30,7 +30,7 @@ class Home extends StatelessWidget {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const MyApp()));
             },
-            child: Text("go Now")),
+            child: const Text("go Now")),
       ),
     );
   }
