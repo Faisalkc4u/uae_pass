@@ -15,12 +15,11 @@ import java.util.*
 
  
 object UAEPassRequestModels {
-    //UAE PASS START -- ADD BELOW FIELDS
+
     private const val UAE_PASS_CLIENT_ID = "sandbox_stage"
     private const val UAE_PASS_CLIENT_SECRET = "sandbox_stage"
     private const val REDIRECT_URL = "https://oauthtest.com/authorization/return"
 
-    //UAE PASS END -- ADD BELOW FIELDS
     private const val DOCUMENT_SIGNING_SCOPE = "urn:safelayer:eidas:sign:process:document"
     private const val RESPONSE_TYPE = "code"
     private const val SCOPE = "urn:uae:digitalid:profile"
