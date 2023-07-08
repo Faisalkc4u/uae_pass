@@ -23,6 +23,7 @@ class MethodChannelUaePass extends UaePassPlatform {
       'client_secret': clientSecret,
       'environment': isProduction ? 'production' : 'qa',
       "redirect_uri_login": urlScheme,
+      "scheme": urlScheme,
       'state': state
     });
   }
