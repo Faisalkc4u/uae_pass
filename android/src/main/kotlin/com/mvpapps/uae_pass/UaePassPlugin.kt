@@ -2,6 +2,7 @@ package com.mvpapps.uae_pass
 
 import ae.sdg.libraryuaepass.*
 import ae.sdg.libraryuaepass.UAEPassController.getAccessToken
+import ae.sdg.libraryuaepass.UAEPassController.getAccessCode
 import ae.sdg.libraryuaepass.UAEPassController.resume
 import ae.sdg.libraryuaepass.business.authentication.model.UAEPassAccessTokenRequestModel
 import android.app.Activity
@@ -123,6 +124,20 @@ class UaePassPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,PluginRegis
       CookieManager.getInstance().flush()
     }
     else if(call.method=="sign_in")
+    { 
+      requestModel = getAuthenticationRequestModel(activity!!)
+
+      getAccessCode(activity!!, requestModel, object : UAEPassAccessCodeCallback {
+        override fun getAccessCode(code: String?, error: String?) {
+          if (error != null) { 
+            result.error("ERROR", error, null);
+          } else { 
+            result.success(code)
+          }
+        }
+      })
+    }
+    else if(call.method=="access_token")
     { 
       requestModel = getAuthenticationRequestModel(activity!!)
 

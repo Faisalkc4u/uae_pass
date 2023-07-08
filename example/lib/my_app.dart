@@ -44,16 +44,17 @@ class _MyAppState extends State<MyApp> {
                 accessToken = null;
                 _error = null;
                 setState(() {});
-                await _uaePassPlugin.setUpSandbox();
-                // await _uaePassPlugin.setUpEnvironment(
-                //   "clientId",
-                //   "secret",
-                //   "uaepassdemoappDS://",
-                //   isProduction: true,
-                // );
+                // await _uaePassPlugin.setUpSandbox();
+                await _uaePassPlugin.setUpEnvironment(
+                  "sandbox_stage",
+                  "sandbox_stage",
+                  "myapp",
+                  "123123123",
+                  isProduction: false,
+                );
                 try {
                   accessToken = await _uaePassPlugin.signIn();
-                  print("my acces token11 $accessToken");
+                  debugPrint("my access token11 $accessToken");
 
                   if (Platform.isIOS) {
                     _authToken =
