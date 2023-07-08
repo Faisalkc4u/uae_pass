@@ -46,6 +46,22 @@
                     android:scheme="myapp" />
 
             </intent-filter>
+            <intent-filter >
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+
+                <data
+                    android:host="success"
+                    android:scheme="uaepassdemoappDS" />
+
+                <data
+                    android:host="failure"
+                    android:scheme="uaepassdemoappDS" />
+
+            </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
