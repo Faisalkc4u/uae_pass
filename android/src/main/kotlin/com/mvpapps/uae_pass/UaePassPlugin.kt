@@ -18,6 +18,10 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.plugin.common.PluginRegistry
+import ae.sdg.libraryuaepass.business.Environment
+import android.content.pm.PackageManager
+import ae.sdg.libraryuaepass.business.Language
+import ae.sdg.libraryuaepass.utils.Utils.generateRandomString
 
 // create a class that implements the PluginRegistry.NewIntentListener interface
  
@@ -29,7 +33,26 @@ class UaePassPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,PluginRegis
   private lateinit var channel : MethodChannel
   private lateinit var requestModel: UAEPassAccessTokenRequestModel
 
+  private var client_id: String? = null
+  private var client_secret: String? = null
+  private var redirect_url: String? = "https://oauthtest.com/authorization/return"
+  private var environment: Environment = Environment.STAGING
+  private var state: String? = null
+  private var scheme: String? = null
+  private var failureHost: String? = null
+  private var successHost: String? = null
+   
 
+
+  private  val UAE_PASS_PACKAGE_ID = "ae.uaepass.mainapp"
+  private  val UAE_PASS_QA_PACKAGE_ID = "ae.uaepass.mainapp.qa"
+  private  val UAE_PASS_STG_PACKAGE_ID = "ae.uaepass.mainapp.stg"
+
+  private  val DOCUMENT_SIGNING_SCOPE = "urn:safelayer:eidas:sign:process:document"
+  private  val RESPONSE_TYPE = "code"
+  private  val SCOPE = "urn:uae:digitalid:profile"
+  private  val ACR_VALUES_MOBILE = "urn:digitalid:authentication:flow:mobileondevice"
+  private  val ACR_VALUES_WEB = "urn:safelayer:tws:policies:authentication:level:low"
 
   private var activity: Activity? = null
   private lateinit var result: Result
@@ -66,19 +89,49 @@ class UaePassPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,PluginRegis
     if(call.method=="set_up_environment")
     {
       CookieManager.getInstance().removeAllCookies { }
-      CookieManager.getInstance().flush()
+      CookieManager.getInstance().flush() 
+      client_id = call.argument<String>("client_id")
+      client_secret = call.argument<String>("client_secret")
+      redirect_url = call.argument<String?>("redirect_url")
+      environment = if(call.argument<String>("environment")!=null && call.argument<String>("environment") == "production")  Environment.PRODUCTION else Environment.STAGING
+      state = call.argument<String?>("state")
+      scheme = call.argument<String>("scheme")
+      failureHost = call.argument<String?>("failureHost") 
+      successHost = call.argument<String?>("successHost")
+      if(redirect_url==null)
+      {
+        redirect_url = "https://oauthtest.com/authorization/return"
+      }
+      if(state==null)
+      {
+        state = generateRandomString(24)
+      }
 
-    }else if(call.method=="sign_in")
+      if(failureHost==null)
+      {
+        failureHost = "failure"
+      }
+      if(successHost==null)
+      {
+        successHost = "success"
+      }
+       
+    }else if(call.method=="sign_out")
+    {
+
+      CookieManager.getInstance().removeAllCookies { }
+      CookieManager.getInstance().flush()
+    }
+    else if(call.method=="sign_in")
     { 
-      requestModel = UAEPassRequestModels.getAuthenticationRequestModel(activity!!)
+      requestModel = getAuthenticationRequestModel(activity!!)
+
       getAccessToken(activity!!, requestModel, object : UAEPassAccessTokenCallback {
         override fun getToken(accessToken: String?, state: String, error: String?) {
-            Log.d("intent","inside call back")
           if (error != null) { 
             result.error("ERROR", error, null);
           } else { 
             result.success(accessToken)
-
           }
         }
       })
@@ -94,7 +147,7 @@ class UaePassPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,PluginRegis
   }
   private fun handleIntent(intent: Intent?) {
     if (intent != null && intent.data != null) {
-      if ("myapp" == intent.data!!.scheme) {
+      if (scheme!! == intent.data!!.scheme) {
         resume(intent.dataString)
       }
     }
@@ -102,5 +155,49 @@ class UaePassPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,PluginRegis
   override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
      channel.setMethodCallHandler(null)
   }
-  
+   private fun isPackageInstalled(packageManager: PackageManager): Boolean {
+        val packageName = when (environment) {
+            is Environment.STAGING -> {
+                UAE_PASS_STG_PACKAGE_ID
+            }
+            is Environment.QA -> {
+                UAE_PASS_QA_PACKAGE_ID
+            }
+            is Environment.PRODUCTION -> {
+                UAE_PASS_PACKAGE_ID
+            }
+            else -> {
+                UAE_PASS_PACKAGE_ID
+            }
+        }
+        var found = true
+        try {
+            packageManager.getPackageInfo(packageName, 0)
+        } catch (e: PackageManager.NameNotFoundException) {
+            found = false
+        }
+        return found
+    }
+     fun getAuthenticationRequestModel(context: Context): UAEPassAccessTokenRequestModel {
+        val ACR_VALUE = if (isPackageInstalled(context.packageManager)) {
+            ACR_VALUES_MOBILE
+        } else {
+            ACR_VALUES_WEB
+        }
+        return UAEPassAccessTokenRequestModel(
+            environment!!,
+            client_id!!,
+            client_secret!!,
+            scheme!!,
+            failureHost!!,
+            successHost!!,
+            redirect_url!!,
+            SCOPE,
+            RESPONSE_TYPE,
+            ACR_VALUE,
+            state!!,
+            Language.EN,
+
+        )
+    }
 }

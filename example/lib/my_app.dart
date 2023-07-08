@@ -55,9 +55,10 @@ class _MyAppState extends State<MyApp> {
                   accessToken = await _uaePassPlugin.signIn();
                   print("my acces token11 $accessToken");
 
-                  if (Platform.isIOS)
+                  if (Platform.isIOS) {
                     _authToken =
                         await _uaePassPlugin.getAccessToken(accessToken!);
+                  }
                 } catch (e) {
                   _error = e.toString();
                 }
@@ -71,7 +72,7 @@ class _MyAppState extends State<MyApp> {
               ),
             Text(
               "$accessToken",
-              style: TextStyle(color: Colors.red),
+              style: const TextStyle(color: Colors.red),
             ),
             if (accessToken != null)
               TextFormField(
