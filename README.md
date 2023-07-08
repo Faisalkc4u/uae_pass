@@ -146,6 +146,9 @@ buildscript {
     // update this line
     ext.kotlin_version = '1.7.10'
 ```
+
+[https://docs.uaepass.ae/faq/common-integration-issues](Read Common issues)
+
 # Access User Data
 
 ```curl

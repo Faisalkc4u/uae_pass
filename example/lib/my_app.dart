@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:uae_pass/uae_pass.dart';
 
@@ -55,17 +53,22 @@ class _MyAppState extends State<MyApp> {
                 try {
                   accessToken = await _uaePassPlugin.signIn();
                   debugPrint("my access token11 $accessToken");
-
-                  if (Platform.isIOS) {
-                    _authToken =
-                        await _uaePassPlugin.getAccessToken(accessToken!);
-                  }
                 } catch (e) {
                   _error = e.toString();
                 }
                 setState(() {});
               },
               child: const Text('Sign in'),
+            ),
+            MaterialButton(
+              onPressed: () async {
+                _authToken = null;
+                accessToken = null;
+                _error = null;
+                await _uaePassPlugin.signOut();
+                setState(() {});
+              },
+              child: const Text('Sign out'),
             ),
             if (_error != null)
               TextFormField(

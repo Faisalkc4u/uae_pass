@@ -41,4 +41,9 @@ class MethodChannelUaePass extends UaePassPlatform {
     });
     return result!;
   }
+
+  @override
+  Future<void> signOut() async {
+    await methodChannel.invokeMethod<void>('sign_out');
+  }
 }

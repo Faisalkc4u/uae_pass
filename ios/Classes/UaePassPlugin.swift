@@ -41,8 +41,8 @@ public class UaePassPlugin: NSObject, FlutterPlugin {
         UAEPASSRouter.shared.spConfig = SPConfig(redirectUriLogin: "https://oauthtest.com/authorization/return",
                                                  scope: "urn:uae:digitalid:profile",
                                                  state:state,  
-                                                 successSchemeURL: redirectUriLogin,
-                                                 failSchemeURL: redirectUriLogin,
+                                                 successSchemeURL: redirectUriLogin+"://",
+                                                 failSchemeURL: redirectUriLogin+"://",
                                                  signingScope: "urn:safelayer:eidas:sign:process:document")
       }
     case "auth_token":
@@ -50,6 +50,9 @@ public class UaePassPlugin: NSObject, FlutterPlugin {
         let code = arguments["code"] as! String
         self.getUaePassTokenForCode(code: code)
       }
+    case "sign_out": 
+      UAEPASSRouter.shared.uaePassToken = nil
+      self.flutterResult!(true)
     case "sign_in":
     
          

@@ -38,4 +38,14 @@ class UaePass {
       throw ("Unknown error");
     }
   }
+
+  Future<void> signOut() async {
+    try {
+      return await UaePassPlatform.instance.signOut();
+    } on PlatformException catch (e) {
+      throw (e.message ?? "Unknown error");
+    } catch (e) {
+      throw ("Unknown error");
+    }
+  }
 }
