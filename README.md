@@ -7,13 +7,13 @@ Un-official UAE Pass Flutter plugin for Android and iOS.
 - Add the plugin to your pubspec.yaml file
 
 ```yaml
-uae_pass: ^0.0.1
+uae_pass_flutter: ^0.0.1
 ```
 
 or
 
 ```yaml
-uae_pass:
+uae_pass_flutter:
   git:
     url: https://github.com/Faisalkc4u/uae_pass.git
     ref: main

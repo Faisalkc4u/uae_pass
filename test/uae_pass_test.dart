@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:uae_pass/uae_pass.dart';
-import 'package:uae_pass/uae_pass_platform_interface.dart';
-import 'package:uae_pass/uae_pass_method_channel.dart';
+import 'package:uae_pass_flutter/uae_pass.dart';
+import 'package:uae_pass_flutter/uae_pass_platform_interface.dart';
+import 'package:uae_pass_flutter/uae_pass_method_channel.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 class MockUaePassPlatform

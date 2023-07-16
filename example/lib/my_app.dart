@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:uae_pass/uae_pass.dart';
+import 'package:uae_pass_flutter/uae_pass.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
