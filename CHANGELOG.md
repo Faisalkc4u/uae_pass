@@ -2,3 +2,4 @@
 
 - Initial release
   ios set ups
+  android set ups

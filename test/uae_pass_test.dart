@@ -20,6 +20,12 @@ class MockUaePassPlatform
   Future<String> getAuthToken(String code) {
     throw UnimplementedError();
   }
+
+  @override
+  Future<void> signOut() {
+    // TODO: implement signOut
+    throw UnimplementedError();
+  }
 }
 
 void main() {

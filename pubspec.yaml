@@ -1,7 +1,7 @@
 name: uae_pass
-description: A new Flutter plugin project.
+description: A UAE Pass plugin for Flutter.
 version: 0.0.1
-homepage:
+homepage: https://github.com/Faisalkc4u/uae_pass
 
 environment:
   sdk: '>=3.0.2 <4.0.0'
