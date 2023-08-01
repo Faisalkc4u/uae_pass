@@ -158,9 +158,13 @@ curl --location --request POST 'https://stg-id.uaepass.ae/idshub/token?grant_typ
 --header 'Authorization: Basic c2FuZGJveF9zdGFnZTpzYW5kYm94X3N0YWdl'
 ```
 
+Refer to [https://docs.uaepass.ae/guides/authentication/web-application/2.-obtaining-the-access-token](Official Documentation)
+
 # Access User Data
 
 ```curl
 curl --location 'https://stg-id.uaepass.ae/idshub/userinfo' \
 --header 'Authorization: Bearer token_here' \
 ```
+
+Refer to [https://docs.uaepass.ae/guides/authentication/web-application/3.-obtaining-authenticated-user-information-from-the-access-token](Official Documentation)
