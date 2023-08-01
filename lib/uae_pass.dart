@@ -4,8 +4,13 @@ import 'uae_pass_platform_interface.dart';
 
 class UaePass {
   Future<void> setUpSandbox() async {
-    UaePassPlatform.instance.setUp("sandbox_stage", "sandbox_stage", false,
-        "uaepassdemoappDS://", "123123213");
+    UaePassPlatform.instance.setUp(
+        "sandbox_stage",
+        "sandbox_stage",
+        false,
+        "uaepassdemoappDS://",
+        "123123213",
+        "https://oauthtest.com/authorization/return");
   }
 
   Future<void> setUpEnvironment(
@@ -14,9 +19,10 @@ class UaePass {
     String urlScheme,
     String state, {
     bool isProduction = false,
+    String redirectUri = "https://oauthtest.com/authorization/return",
   }) async {
-    UaePassPlatform.instance
-        .setUp(clientId, clientSecret, isProduction, urlScheme, state);
+    UaePassPlatform.instance.setUp(
+        clientId, clientSecret, isProduction, urlScheme, state, redirectUri);
   }
 
   Future<String> signIn() async {

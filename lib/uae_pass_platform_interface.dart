@@ -24,7 +24,7 @@ abstract class UaePassPlatform extends PlatformInterface {
   }
 
   Future<void> setUp(String clientId, String clientSecret, bool isProduction,
-      String urlScheme, String state) {
+      String urlScheme, String state, String redirectUri) {
     throw UnimplementedError('setUp() has not been implemented.');
   }
 

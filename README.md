@@ -48,6 +48,7 @@ final _uaePassPlugin = UaePass();
                   "< client secret here >",
                   "< redirect url scheme here >",
                   isProduction: true, // set to false for sandbox
+                  redirect_url: "< redirect url here >",
                 );
 ```
 

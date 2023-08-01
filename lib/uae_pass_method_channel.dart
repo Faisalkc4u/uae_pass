@@ -16,6 +16,7 @@ class MethodChannelUaePass extends UaePassPlatform {
     bool isProduction,
     String urlScheme,
     String state,
+    String redirectUri,
   ) async {
     await methodChannel
         .invokeMethod<void>('set_up_environment', <String, String>{
@@ -24,7 +25,8 @@ class MethodChannelUaePass extends UaePassPlatform {
       'environment': isProduction ? 'production' : 'qa',
       "redirect_uri_login": urlScheme,
       "scheme": urlScheme,
-      'state': state
+      'state': state,
+      "redirect_url": redirectUri,
     });
   }
 

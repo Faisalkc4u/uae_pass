@@ -9,7 +9,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:uae_pass/uae_pass.dart';
+import 'package:uae_pass_flutter/uae_pass.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -17,7 +17,7 @@ void main() {
   testWidgets('getPlatformVersion test', (WidgetTester tester) async {
     final UaePass plugin = UaePass();
     await plugin.setUpSandbox();
-    final String? version = await plugin.signIn();
+    final String version = await plugin.signIn();
     // The version string depends on the host platform running the test, so
     // just assert that some non-empty string is returned.
     expect(version?.isNotEmpty, true);

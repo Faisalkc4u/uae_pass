@@ -12,7 +12,7 @@ class MockUaePassPlatform
 
   @override
   Future<void> setUp(String clientId, String clientSecret, bool isProduction,
-      String urlScheme, String state) {
+      String urlScheme, String state, String redirectUri) {
     return Future.value(null);
   }
 
