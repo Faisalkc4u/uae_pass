@@ -139,6 +139,7 @@ final _uaePassPlugin = UaePass();
             </intent-filter>
 
 ```
+
 Note: incase kotlin error, add the following to your build.gradle file
 
 ```gradle
@@ -148,6 +149,14 @@ buildscript {
 ```
 
 [https://docs.uaepass.ae/faq/common-integration-issues](Read Common issues)
+
+## Access Token
+
+```curl
+curl --location --request POST 'https://stg-id.uaepass.ae/idshub/token?grant_type=authorization_code&redirect_uri=https://stg-selfcare.uaepass.ae&code=bfe96299-83f4-3ee9-80e4-56c24f5265d3' \
+--header 'Content-Type: multipart/form-data' \
+--header 'Authorization: Basic c2FuZGJveF9zdGFnZTpzYW5kYm94X3N0YWdl'
+```
 
 # Access User Data
 
