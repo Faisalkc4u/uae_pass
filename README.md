@@ -148,7 +148,7 @@ buildscript {
     ext.kotlin_version = '1.7.10'
 ```
 
-[https://docs.uaepass.ae/faq/common-integration-issues](Read Common issues)
+[Read Common issues](https://docs.uaepass.ae/faq/common-integration-issues)
 
 ## Access Token
 
@@ -158,7 +158,7 @@ curl --location --request POST 'https://stg-id.uaepass.ae/idshub/token?grant_typ
 --header 'Authorization: Basic c2FuZGJveF9zdGFnZTpzYW5kYm94X3N0YWdl'
 ```
 
-Refer to [https://docs.uaepass.ae/guides/authentication/web-application/2.-obtaining-the-access-token](Official Documentation)
+Refer to [Official Documentation](https://docs.uaepass.ae/guides/authentication/web-application/2.-obtaining-the-access-token)
 
 # Access User Data
 
@@ -167,4 +167,4 @@ curl --location 'https://stg-id.uaepass.ae/idshub/userinfo' \
 --header 'Authorization: Bearer token_here' \
 ```
 
-Refer to [https://docs.uaepass.ae/guides/authentication/web-application/3.-obtaining-authenticated-user-information-from-the-access-token](Official Documentation)
+Refer to [Official Documentation](https://docs.uaepass.ae/guides/authentication/web-application/3.-obtaining-authenticated-user-information-from-the-access-token)
