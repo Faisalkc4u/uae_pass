@@ -43,11 +43,11 @@ class _MyAppState extends State<MyApp> {
                 // await _uaePassPlugin.setUpSandbox();
 
                 await _uaePassPlugin.setUpEnvironment(
-                  "fed_rcuae_mob_stage",
-                  "sEhpzALgeQoitBrJ",
+                  "sandbox_stage",
+                  "sandbox_stage",
                   "myapp",
                   "123123123",
-                  isProduction: true,
+                  isProduction: false,
                 );
                 try {
                   accessToken = await _uaePassPlugin.signIn();
