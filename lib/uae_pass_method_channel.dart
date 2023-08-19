@@ -45,6 +45,14 @@ class MethodChannelUaePass extends UaePassPlatform {
   }
 
   @override
+  Future<String> getAccessToken(String code) async {
+    final result = await methodChannel.invokeMethod<String>('auth_token', {
+      'code': code,
+    });
+    return result!;
+  }
+
+  @override
   Future<void> signOut() async {
     await methodChannel.invokeMethod<void>('sign_out');
   }

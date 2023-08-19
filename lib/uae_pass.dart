@@ -8,7 +8,7 @@ class UaePass {
         "sandbox_stage",
         "sandbox_stage",
         false,
-        "uaepassdemoappDS://",
+        "uaepassdemoappDS",
         "123123213",
         "https://oauthtest.com/authorization/return");
   }
