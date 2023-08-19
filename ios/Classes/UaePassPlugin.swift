@@ -36,10 +36,11 @@ public class UaePassPlugin: NSObject, FlutterPlugin {
         let env = environment == "production" ? UAEPASSEnvirnonment.production : UAEPASSEnvirnonment.staging
         let redirectUriLogin = arguments["redirect_uri_login"] as! String
         let state = arguments["state"] as! String
+        let scope = arguments["scope"] as! String
         UAEPASSRouter.shared.environmentConfig = UAEPassConfig(clientID: clientID, clientSecret: clientSecret, env: env)
 
         UAEPASSRouter.shared.spConfig = SPConfig(redirectUriLogin: "https://oauthtest.com/authorization/return",
-                                                 scope: "urn:uae:digitalid:profile",
+                                                 scope: scope,
                                                  state:state,  
                                                  successSchemeURL: redirectUriLogin+"://",
                                                  failSchemeURL: redirectUriLogin+"://",

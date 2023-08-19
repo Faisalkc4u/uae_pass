@@ -1,4 +1,4 @@
-package com.mvpapps.uae_pass
+package com.mvpapps.uae_pass_flutter
 
 import ae.sdg.libraryuaepass.business.Language
 import ae.sdg.libraryuaepass.business.Environment

@@ -1,4 +1,4 @@
-package com.mvpapps.uae_pass_flutter
+package com.mvpapps.uae_pass
 
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
@@ -16,7 +16,7 @@ import org.mockito.Mockito
 internal class UaePassFlutterPluginTest {
   @Test
   fun onMethodCall_getPlatformVersion_returnsExpectedValue() {
-    val plugin = UaePassFlutterPluginTest()
+    val plugin = UaePassFlutterPlugin()
 
     val call = MethodCall("getPlatformVersion", null)
     val mockResult: MethodChannel.Result = Mockito.mock(MethodChannel.Result::class.java)

@@ -1,4 +1,4 @@
-group 'com.mvpapps.uae_pass'
+group 'com.mvpapps.uae_pass_flutter'
 version '1.0-SNAPSHOT'
 
 buildscript {
@@ -18,7 +18,7 @@ rootProject.allprojects {
         google()
         mavenCentral()
         flatDir {
-            dirs project(':uae_pass').file('libs')
+            dirs project(':uae_pass_flutter').file('libs')
         }
     }
 }

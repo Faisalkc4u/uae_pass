@@ -17,6 +17,7 @@ class MethodChannelUaePass extends UaePassPlatform {
     String urlScheme,
     String state,
     String redirectUri,
+    String scope,
   ) async {
     await methodChannel
         .invokeMethod<void>('set_up_environment', <String, String>{
@@ -27,6 +28,7 @@ class MethodChannelUaePass extends UaePassPlatform {
       "scheme": urlScheme,
       'state': state,
       "redirect_url": redirectUri,
+      "scope": scope,
     });
   }
 
