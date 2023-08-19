@@ -1,4 +1,4 @@
-package com.mvpapps.uae_pass
+package com.mvpapps.uae_pass_flutter
 
 import ae.sdg.libraryuaepass.*
 import ae.sdg.libraryuaepass.UAEPassController.getAccessToken
@@ -29,7 +29,7 @@ import ae.sdg.libraryuaepass.utils.Utils.generateRandomString
 
 
 /** UaePassPlugin */
-class UaePassPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,PluginRegistry.NewIntentListener{
+class UaePassFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,PluginRegistry.NewIntentListener{
 
   private lateinit var channel : MethodChannel
   private lateinit var requestModel: UAEPassAccessTokenRequestModel
@@ -42,6 +42,7 @@ class UaePassPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,PluginRegis
   private var scheme: String? = null
   private var failureHost: String? = null
   private var successHost: String? = null
+  private var scope: String? = "urn:uae:digitalid:profile"
    
 
 
@@ -99,6 +100,7 @@ class UaePassPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,PluginRegis
       scheme = call.argument<String>("scheme")
       failureHost = call.argument<String?>("failureHost") 
       successHost = call.argument<String?>("successHost")
+      scope = call.argument<String?>("scope")
       if(redirect_url==null)
       {
         redirect_url = "https://oauthtest.com/authorization/return"
@@ -207,7 +209,7 @@ class UaePassPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,PluginRegis
             failureHost!!,
             successHost!!,
             redirect_url!!,
-            SCOPE,
+            scope!!,
             RESPONSE_TYPE,
             ACR_VALUE,
             state!!,
