@@ -17,13 +17,11 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    print('initState called');
   }
 
   @override
   void dispose() {
     super.dispose();
-    print('disposed called');
   }
 
   @override
@@ -43,12 +41,13 @@ class _MyAppState extends State<MyApp> {
                 _error = null;
                 setState(() {});
                 // await _uaePassPlugin.setUpSandbox();
+
                 await _uaePassPlugin.setUpEnvironment(
-                  "sandbox_stage",
-                  "sandbox_stage",
+                  "fed_rcuae_mob_stage",
+                  "sEhpzALgeQoitBrJ",
                   "myapp",
                   "123123123",
-                  isProduction: false,
+                  isProduction: true,
                 );
                 try {
                   accessToken = await _uaePassPlugin.signIn();
