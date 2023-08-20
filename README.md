@@ -49,8 +49,14 @@ final _uaePassPlugin = UaePass();
                   "< redirect url scheme here >",
                   isProduction: true, // set to false for sandbox
                   redirect_url: "< redirect url here >",
+                  scope: "< scope here >",// by default urn:uae:digitalid:profile
                 );
 ```
+
+# Scopes are as follows
+
+- urn:uae:digitalid:profile:general
+- urn:uae:digitalid:profile
 
 - Call the authenticate method
 
@@ -152,6 +158,11 @@ buildscript {
 [Read Common issues](https://docs.uaepass.ae/faq/common-integration-issues)
 
 ## Access Token
+
+![Get the code from sign in method](https://github.com/Faisalkc4u/uae_pass/blob/main/screenshots/iphone.png?raw=true)
+![Convert on access code to access code](https://github.com/Faisalkc4u/uae_pass/blob/main/screenshots/postman_key_setup.png?raw=true)
+
+![Convert on access code to access code](https://github.com/Faisalkc4u/uae_pass/blob/main/screenshots/postman_body_and_response.png?raw=true)
 
 ```curl
 curl --location --request POST 'https://stg-id.uaepass.ae/idshub/token?grant_type=authorization_code&redirect_uri=https://stg-selfcare.uaepass.ae&code=bfe96299-83f4-3ee9-80e4-56c24f5265d3' \
