@@ -58,7 +58,7 @@ final _uaePassPlugin = UaePass();
 - urn:uae:digitalid:profile:general
 - urn:uae:digitalid:profile
 
-- Call the authenticate method
+# Call the authenticate method
 
 ```dart
   final result = await _uaePassPlugin.signIn();
