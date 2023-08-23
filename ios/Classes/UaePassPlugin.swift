@@ -1,5 +1,6 @@
 import Flutter
 import UIKit
+import WebKit
 
 public class UaePassPlugin: NSObject, FlutterPlugin {
   private var flutterResult:FlutterResult?
@@ -52,6 +53,12 @@ public class UaePassPlugin: NSObject, FlutterPlugin {
         self.getUaePassTokenForCode(code: code)
       }
     case "sign_out": 
+      HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
+      WKWebsiteDataStore.default().fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
+          records.forEach { record in
+              WKWebsiteDataStore.default().removeData(ofTypes: record.dataTypes, for: [record], completionHandler: {})
+          }
+      }
       UAEPASSRouter.shared.uaePassToken = nil
       self.flutterResult!(true)
     case "sign_in":
