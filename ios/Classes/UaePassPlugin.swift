@@ -79,7 +79,7 @@ public class UaePassPlugin: NSObject, FlutterPlugin {
             }
             webVC.onUAEPassFailureBlock = {(response: String?) -> Void in
                 UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: true)
-                 self.flutterResult!(response) 
+                 self.flutterResult!(FlutterError(code: "ERROR", message:response,details: nil)) 
             }
             webVC.reloadwithURL(url: webVC.urlString)
             UIApplication.shared.keyWindow?.rootViewController?.present(webVC, animated: true)
